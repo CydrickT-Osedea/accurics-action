@@ -33,11 +33,11 @@ process_args() {
 create_terraformrc_file() {
   local token=$1
 
-  if [ "$INPUT_SCAN_MODE" != "__empty__" ]; then
+  if [ "$token" != "__empty__" ]; then
 
     touch /tmp/.terraformrc
     echo 'credentials "app.terraform.io" {' > /tmp/.terraformrc
-    echo '  token = "' + $token + '"' >> /tmp/.terraformrc
+    echo '  token = "'$token'"' >> /tmp/.terraformrc
     echo '}' >> /tmp/.terraformrc
     echo 'Printing: /tmp/.terraformrc...'
     cat /tmp/.terraformrc
