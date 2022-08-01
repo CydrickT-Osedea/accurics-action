@@ -36,9 +36,9 @@ create_terraformrc_file() {
   if [ "$token" != "__empty__" ]; then
 
     touch /tmp/.terraformrc
-    echo 'credentials "app.terraform.io" {' > /tmp/.terraformrc
-    echo '  token = "'$token'"' >> /tmp/.terraformrc
-    echo '}' >> /tmp/.terraformrc
+    echo "credentials \"app.terraform.io\" {" > /tmp/.terraformrc
+    echo "  token = \"$token\"" >> /tmp/.terraformrc
+    echo "}" >> /tmp/.terraformrc
     echo 'Printing: /tmp/.terraformrc...'
     cat /tmp/.terraformrc
     export TF_CLI_CONFIG_FILE="/tmp/.terraformrc"
