@@ -33,8 +33,10 @@ process_args() {
 create_terraformrc_file() {
   local token=$1
 
-  if [ "$token" != "__empty__" ]; then
+  echo "Terraform API Key: $token" 
 
+  if [ "$token" != "__empty__" ]; then
+  
     touch /tmp/.terraformrc
     echo "credentials \"app.terraform.io\" {" > /tmp/.terraformrc
     echo "  token = \"$token\"" >> /tmp/.terraformrc
@@ -42,6 +44,7 @@ create_terraformrc_file() {
     echo 'Printing: /tmp/.terraformrc...'
     cat /tmp/.terraformrc
     export TF_CLI_CONFIG_FILE="/tmp/.terraformrc"
+
   else
      echo "No Terraform API Token provided, not creating .terraformrc file."
   fi
