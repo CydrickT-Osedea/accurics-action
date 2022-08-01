@@ -36,7 +36,7 @@ create_terraformrc_file() {
   echo "Terraform API Key: $token" 
 
   if [ "$token" != "__empty__" ]; then
-  
+
     touch /tmp/.terraformrc
     echo "credentials \"app.terraform.io\" {" > /tmp/.terraformrc
     echo "  token = \"$token\"" >> /tmp/.terraformrc
@@ -145,7 +145,7 @@ process_output() {
 INPUT_DEBUG_MODE=$1
 [ "$INPUT_DEBUG_MODE" = "true" ] && set -x
 
-process_args "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9" "${10}" "${11}" "${12}"
+process_args "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9" "${10}" "${11}" "${12}" "${13}"
 
 create_terraformrc_file "$INPUT_TERRAFORM_API_KEY"
 
