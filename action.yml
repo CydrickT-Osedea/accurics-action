@@ -53,6 +53,10 @@ inputs:
     description: 'Allows Accurics to put data into pipeline tab in tenable.cs web consile values accepted(true/false)'
     required: false
     default: false
+  terraform-api-key:
+    description: 'Terraform API Key. You can provide this argument if you have private resources hosted on Terraform'
+    required: false
+    default: '__empty__'
 outputs:
   env-name:
     description: 'Environment Name'
@@ -96,4 +100,5 @@ runs:
     - ${{ inputs.fail-on-all-errors }}
     - ${{ inputs.scan-mode }}
     - ${{ inputs.pipeline }}
+    - ${{ inputs.terraform-api-key }}
 

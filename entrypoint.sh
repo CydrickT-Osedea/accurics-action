@@ -16,6 +16,7 @@ process_args() {
   INPUT_FAIL_ON_ALL_ERRORS=${10}
   INPUT_SCAN_MODE=${11}
   INPUT_PIPELINE=${12}
+  INPUT_TERRAFORM_API_KEY=${13}
 
   # If all config parameters are specified, use the config params passed in instead of the config file checked into the repository
   [ "$INPUT_ENV_ID" = "" ]    && echo "Error: The env-id parameter is required and not set." && exit 1
@@ -27,6 +28,23 @@ process_args() {
   export ACCURICS_ENV_ID=$INPUT_ENV_ID
   export ACCURICS_APP_ID=$INPUT_APP_ID
   export ACCURICS_REPO_NAME=$INPUT_REPO_NAME
+}
+
+create_terraformrc_file() {
+  local token=$1
+
+  if [ "$INPUT_SCAN_MODE" != "__empty__" ]; then
+
+    touch /tmp/.terraformrc
+    echo 'credentials "app.terraform.io" {' > /tmp/.terraformrc
+    echo '  token = "' + $token + '"' >> /tmp/.terraformrc
+    echo '}' >> /tmp/.terraformrc
+    echo 'Printing: /tmp/.terraformrc...'
+    cat /tmp/.terraformrc
+    export TF_CLI_CONFIG_FILE="/tmp/.terraformrc"
+  else
+     echo "No Terraform API Token provided, not creating .terraformrc file."
+  fi
 }
 
 install_terraform() {
@@ -125,6 +143,8 @@ INPUT_DEBUG_MODE=$1
 [ "$INPUT_DEBUG_MODE" = "true" ] && set -x
 
 process_args "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9" "${10}" "${11}" "${12}"
+
+create_terraformrc_file "$INPUT_TERRAFORM_API_KEY"
 
 install_terraform $INPUT_TERRAFORM_VERSION
 
